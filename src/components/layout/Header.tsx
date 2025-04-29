@@ -23,9 +23,13 @@ export default function Header() {
     <header className="sticky top-0 z-50 bg-white shadow-sm">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="font-bold text-xl text-shop-primary">
-            ShopSmart
+          {/* TataCliq Logo */}
+          <Link to="/" className="flex items-center">
+            <img 
+              src="/lovable-uploads/fc9136e1-baf3-4ddb-b505-6cec01387a72.png" 
+              alt="TataCliq Logo" 
+              className="h-10"
+            />
           </Link>
 
           {/* Search Bar - visible on desktop */}

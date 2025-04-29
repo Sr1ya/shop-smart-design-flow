@@ -14,6 +14,11 @@ export default function ProductCard({ product }: ProductCardProps) {
     window.scrollTo(0, 0);
   };
   
+  // Format price as INR currency
+  const formatPrice = (price: number) => {
+    return `₹${price.toFixed(2)}`;
+  };
+  
   return (
     <div className="product-card group">
       <div className="relative">
@@ -48,10 +53,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Link>
         <div className="mt-2 flex items-center justify-between">
           <div className="flex items-center">
-            <span className="font-semibold text-shop-primary">${product.price.toFixed(2)}</span>
+            <span className="font-semibold text-shop-primary">{formatPrice(product.price)}</span>
             {product.originalPrice && (
               <span className="text-shop-text-light text-sm ml-2 line-through">
-                ${product.originalPrice.toFixed(2)}
+                {formatPrice(product.originalPrice)}
               </span>
             )}
           </div>

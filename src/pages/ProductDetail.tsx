@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Star, ChevronLeft, ShoppingCart, Heart } from 'lucide-react';
@@ -49,6 +50,11 @@ export default function ProductDetail() {
     setSelectedSize('');
     setQuantity(1);
   }, [id]);
+
+  // Format price as INR currency
+  const formatPrice = (price: number) => {
+    return `₹${price.toFixed(2)}`;
+  };
 
   const handleAddToCart = () => {
     if (!selectedSize) {
@@ -202,10 +208,10 @@ export default function ProductDetail() {
             {/* Price */}
             <div className="mb-6">
               <div className="flex items-center">
-                <span className="text-2xl font-bold text-shop-primary">${product.price.toFixed(2)}</span>
+                <span className="text-2xl font-bold text-shop-primary">{formatPrice(product.price)}</span>
                 {product.originalPrice && (
                   <span className="text-shop-text-light text-lg ml-3 line-through">
-                    ${product.originalPrice.toFixed(2)}
+                    {formatPrice(product.originalPrice)}
                   </span>
                 )}
                 {product.discount && (
@@ -262,7 +268,7 @@ export default function ProductDetail() {
             {/* Action Buttons */}
             <div className="flex flex-col md:flex-row gap-4">
               <Button 
-                className="btn-primary flex-1 flex items-center justify-center"
+                className="btn-primary flex-1 flex items-center justify-center bg-[#c01f2f]"
                 onClick={handleAddToCart}
               >
                 <ShoppingCart size={18} className="mr-2" />
