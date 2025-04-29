@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Heart } from 'lucide-react';
+import { Heart, IndianRupee } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Product } from '@/types/product';
 
@@ -16,7 +16,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   
   // Format price as INR currency
   const formatPrice = (price: number) => {
-    return `₹${price.toFixed(2)}`;
+    return `₹${price.toLocaleString('en-IN')}`;
   };
   
   return (
@@ -53,9 +53,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         </Link>
         <div className="mt-2 flex items-center justify-between">
           <div className="flex items-center">
-            <span className="font-semibold text-shop-primary">{formatPrice(product.price)}</span>
+            <span className="font-semibold text-shop-primary flex items-center">
+              <IndianRupee size={14} className="mr-0.5" />
+              {formatPrice(product.price)}
+            </span>
             {product.originalPrice && (
-              <span className="text-shop-text-light text-sm ml-2 line-through">
+              <span className="text-shop-text-light text-sm ml-2 line-through flex items-center">
+                <IndianRupee size={12} className="mr-0.5" />
                 {formatPrice(product.originalPrice)}
               </span>
             )}

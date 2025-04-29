@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from 'react';
 import { useParams, Link, useLocation } from 'react-router-dom';
-import { Star, ChevronLeft, ShoppingCart, Heart } from 'lucide-react';
+import { Star, ChevronLeft, ShoppingCart, Heart, IndianRupee } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { getMockProductById, getMockProducts } from '@/lib/mockData';
@@ -53,7 +52,7 @@ export default function ProductDetail() {
 
   // Format price as INR currency
   const formatPrice = (price: number) => {
-    return `₹${price.toFixed(2)}`;
+    return `${price.toLocaleString('en-IN')}`;
   };
 
   const handleAddToCart = () => {
@@ -208,9 +207,13 @@ export default function ProductDetail() {
             {/* Price */}
             <div className="mb-6">
               <div className="flex items-center">
-                <span className="text-2xl font-bold text-shop-primary">{formatPrice(product.price)}</span>
+                <span className="text-2xl font-bold text-shop-primary flex items-center">
+                  <IndianRupee size={18} className="mr-1" />
+                  {formatPrice(product.price)}
+                </span>
                 {product.originalPrice && (
-                  <span className="text-shop-text-light text-lg ml-3 line-through">
+                  <span className="text-shop-text-light text-lg ml-3 line-through flex items-center">
+                    <IndianRupee size={14} className="mr-0.5" />
                     {formatPrice(product.originalPrice)}
                   </span>
                 )}
