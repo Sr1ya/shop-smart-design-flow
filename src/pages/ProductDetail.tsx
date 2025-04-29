@@ -1,6 +1,5 @@
-
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useLocation } from 'react-router-dom';
 import { Star, ChevronLeft, ShoppingCart, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -12,12 +11,18 @@ import Layout from '@/components/layout/Layout';
 
 export default function ProductDetail() {
   const { id } = useParams<{ id: string }>();
+  const location = useLocation();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState<string>('');
   const [quantity, setQuantity] = useState<number>(1);
   const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const { toast } = useToast();
+
+  // Fix scrolling issue - scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -54,10 +59,30 @@ export default function ProductDetail() {
       return;
     }
 
-    // In a real app, this would dispatch to a cart state/API
+    if (!product) return;
+
+    // Get existing cart from localStorage
+    const existingCart = localStorage.getItem('cart');
+    const cartItems = existingCart ? JSON.parse(existingCart) : [];
+    
+    // Add item to cart
+    const newItem = {
+      id: product.id,
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      image: product.image,
+      size: selectedSize,
+      color: product.colors[0] || 'default',
+      quantity: quantity
+    };
+    
+    cartItems.push(newItem);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+
     toast({
       title: "Added to cart!",
-      description: `${product?.name} (Size: ${selectedSize}, Qty: ${quantity})`,
+      description: `${product.name} (Size: ${selectedSize}, Qty: ${quantity})`,
     });
   };
 
@@ -70,11 +95,32 @@ export default function ProductDetail() {
       return;
     }
     
-    // In a real app, this would add to cart then navigate
+    if (!product) return;
+    
+    // Add to cart first
+    const existingCart = localStorage.getItem('cart');
+    const cartItems = existingCart ? JSON.parse(existingCart) : [];
+    
+    const newItem = {
+      id: product.id,
+      name: product.name,
+      brand: product.brand,
+      price: product.price,
+      image: product.image,
+      size: selectedSize,
+      color: product.colors[0] || 'default',
+      quantity: quantity
+    };
+    
+    cartItems.push(newItem);
+    localStorage.setItem('cart', JSON.stringify(cartItems));
+    
     toast({
       title: "Proceeding to checkout",
     });
-    // And then navigate to checkout
+    
+    // Navigate to checkout
+    window.location.href = '/checkout';
   };
 
   const handleAddToWishlist = () => {
@@ -82,6 +128,19 @@ export default function ProductDetail() {
       title: "Added to wishlist!",
       description: product?.name,
     });
+  };
+
+  // Helper function to determine if we're showing numeric or letter sizes
+  const getSizeOptions = () => {
+    if (!product) return [];
+    
+    // If it's footwear, use numeric sizes
+    if (product.category.toLowerCase().includes('footwear')) {
+      return ['38', '39', '40', '41', '42', '43', '44', '45'];
+    }
+    
+    // Otherwise use the sizes from the product
+    return product.sizes;
   };
 
   if (loading || !product) {
@@ -99,6 +158,8 @@ export default function ProductDetail() {
       </Layout>
     );
   }
+
+  const sizeOptions = getSizeOptions();
 
   return (
     <Layout>
@@ -165,11 +226,9 @@ export default function ProductDetail() {
                   <SelectValue placeholder="Select a size" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="xs">XS</SelectItem>
-                  <SelectItem value="s">S</SelectItem>
-                  <SelectItem value="m">M</SelectItem>
-                  <SelectItem value="l">L</SelectItem>
-                  <SelectItem value="xl">XL</SelectItem>
+                  {sizeOptions.map((size) => (
+                    <SelectItem key={size} value={size}>{size}</SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>

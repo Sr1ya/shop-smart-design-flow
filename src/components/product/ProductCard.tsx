@@ -9,10 +9,15 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const handleProductClick = () => {
+    // Ensure scroll to top when clicking on product
+    window.scrollTo(0, 0);
+  };
+  
   return (
     <div className="product-card group">
       <div className="relative">
-        <Link to={`/product/${product.id}`}>
+        <Link to={`/product/${product.id}`} onClick={handleProductClick}>
           <img 
             src={product.image} 
             alt={product.name} 
@@ -33,10 +38,10 @@ export default function ProductCard({ product }: ProductCardProps) {
         )}
       </div>
       <div className="p-4">
-        <Link to={`/product/${product.id}`} className="text-sm text-shop-text-light">
+        <Link to={`/product/${product.id}`} onClick={handleProductClick} className="text-sm text-shop-text-light">
           {product.brand}
         </Link>
-        <Link to={`/product/${product.id}`}>
+        <Link to={`/product/${product.id}`} onClick={handleProductClick}>
           <h3 className="font-medium text-shop-text mt-1 hover:text-shop-primary transition-colors">
             {product.name}
           </h3>

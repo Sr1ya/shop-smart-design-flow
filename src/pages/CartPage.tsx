@@ -22,11 +22,22 @@ export default function CartPage() {
     // Simulate API call
     const fetchCart = async () => {
       try {
-        // In a real app, this would be an API call
-        const data = getMockCartItems();
-        setCartItems(data);
+        // Check local storage for cart items first
+        const storedCart = localStorage.getItem('cart');
+        if (storedCart) {
+          const parsedCart = JSON.parse(storedCart);
+          setCartItems(parsedCart);
+        } else {
+          // Fallback to mock data
+          const data = getMockCartItems();
+          setCartItems(data);
+          // Store in local storage
+          localStorage.setItem('cart', JSON.stringify(data));
+        }
       } catch (error) {
         console.error('Error fetching cart items:', error);
+        // Fallback to empty cart
+        setCartItems([]);
       } finally {
         setLoading(false);
       }
@@ -43,11 +54,15 @@ export default function CartPage() {
     );
     
     setCartItems(updatedItems);
+    // Update local storage
+    localStorage.setItem('cart', JSON.stringify(updatedItems));
   };
 
   const handleRemoveItem = (id: string) => {
     const updatedItems = cartItems.filter(item => item.id !== id);
     setCartItems(updatedItems);
+    // Update local storage
+    localStorage.setItem('cart', JSON.stringify(updatedItems));
     
     toast({
       title: "Item removed from cart",
