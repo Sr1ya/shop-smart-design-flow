@@ -16,7 +16,7 @@ interface Banner {
 const banners: Banner[] = [
   {
     id: 1,
-    image: "https://images.unsplash.com/photo-1607083206869-4c7672e72a8a?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1623244307563-f9ade3df13c0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
     title: "Summer Collection 2023",
     description: "Discover the hottest styles for summer",
     buttonText: "Shop Now",
@@ -24,7 +24,7 @@ const banners: Banner[] = [
   },
   {
     id: 2,
-    image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
     title: "Up to 50% Off",
     description: "Limited time offer on selected items",
     buttonText: "View Deals",
@@ -32,7 +32,7 @@ const banners: Banner[] = [
   },
   {
     id: 3,
-    image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
     title: "New Arrivals",
     description: "Be the first to check our latest collection",
     buttonText: "Explore",
