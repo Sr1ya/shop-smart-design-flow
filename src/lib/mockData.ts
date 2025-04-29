@@ -1,4 +1,6 @@
+
 import { Product } from '@/types/product';
+import { CartItem } from '@/types/cart';
 
 // Mock product data
 const products: Product[] = [
@@ -219,4 +221,41 @@ export function getMockProductsByCategory(category: string, count: number = 4): 
   // Otherwise return random selection
   const shuffled = [...filtered].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
+}
+
+// Function to get mock cart items
+export function getMockCartItems(): CartItem[] {
+  // Check if there are items in localStorage first
+  const storedCart = localStorage.getItem('cart');
+  if (storedCart) {
+    try {
+      return JSON.parse(storedCart);
+    } catch (e) {
+      console.error('Error parsing cart from localStorage:', e);
+    }
+  }
+
+  // Return default mock cart items if no localStorage data
+  return [
+    {
+      id: '1',
+      name: 'Premium Cotton T-Shirt',
+      brand: 'Allen Solly',
+      price: 1499,
+      image: 'https://source.unsplash.com/rK9vXlN3GX0',
+      size: 'M',
+      color: 'Black',
+      quantity: 1
+    },
+    {
+      id: '3',
+      name: 'Running Shoes',
+      brand: 'Puma',
+      price: 3999,
+      image: 'https://source.unsplash.com/EPjXIJhBZFI',
+      size: '42',
+      color: 'Black',
+      quantity: 1
+    }
+  ];
 }
