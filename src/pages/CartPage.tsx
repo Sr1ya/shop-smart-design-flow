@@ -92,7 +92,7 @@ export default function CartPage() {
   );
   
   const discountAmount = couponApplied ? (subtotal * discount) / 100 : 0;
-  const shippingCost = subtotal > 0 ? 10 : 0;
+  const shippingCost = subtotal > 0 ? 50 : 0;
   const total = subtotal - discountAmount + shippingCost;
 
   const proceedToCheckout = () => {
@@ -182,7 +182,7 @@ export default function CartPage() {
                       {/* Price */}
                       <div className="md:col-span-2 md:text-center flex justify-between md:block mb-4 md:mb-0">
                         <span className="md:hidden">Price:</span>
-                        <span>${item.price.toFixed(2)}</span>
+                        <span>₹{item.price.toLocaleString('en-IN')}</span>
                       </div>
 
                       {/* Quantity */}
@@ -210,7 +210,7 @@ export default function CartPage() {
                       <div className="md:col-span-2 md:text-center flex justify-between md:block">
                         <span className="md:hidden">Subtotal:</span>
                         <div className="font-medium">
-                          ${(item.price * item.quantity).toFixed(2)}
+                          ₹{(item.price * item.quantity).toLocaleString('en-IN')}
                         </div>
                       </div>
 
@@ -271,17 +271,17 @@ export default function CartPage() {
                 <div className="border-t border-gray-200 py-4">
                   <div className="flex justify-between mb-2">
                     <span className="text-shop-text-light">Subtotal</span>
-                    <span>${subtotal.toFixed(2)}</span>
+                    <span>₹{subtotal.toLocaleString('en-IN')}</span>
                   </div>
                   {couponApplied && (
                     <div className="flex justify-between mb-2 text-green-600">
                       <span>Discount ({discount}%)</span>
-                      <span>-${discountAmount.toFixed(2)}</span>
+                      <span>-₹{discountAmount.toLocaleString('en-IN')}</span>
                     </div>
                   )}
                   <div className="flex justify-between">
                     <span className="text-shop-text-light">Shipping</span>
-                    <span>${shippingCost.toFixed(2)}</span>
+                    <span>₹{shippingCost.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
                 
@@ -289,7 +289,7 @@ export default function CartPage() {
                 <div className="border-t border-gray-200 py-4 mb-6">
                   <div className="flex justify-between font-semibold text-lg">
                     <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>₹{total.toLocaleString('en-IN')}</span>
                   </div>
                 </div>
                 

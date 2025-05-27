@@ -35,7 +35,7 @@ export default function SearchResults() {
   const [filters, setFilters] = useState<FilterState>({
     sizes: [],
     colors: [],
-    priceRange: { min: 0, max: 100 },
+    priceRange: { min: 0, max: 10000 },
     brands: []
   });
   
@@ -98,7 +98,7 @@ export default function SearchResults() {
     setFilters({
       sizes: [],
       colors: [],
-      priceRange: { min: 0, max: 100 },
+      priceRange: { min: 0, max: 10000 },
       brands: []
     });
   };
@@ -154,14 +154,14 @@ export default function SearchResults() {
                 <h3 className="font-medium mb-4">Price Range</h3>
                 <Slider
                   defaultValue={[filters.priceRange.min, filters.priceRange.max]}
-                  max={100}
-                  step={1}
+                  max={10000}
+                  step={100}
                   onValueChange={handlePriceChange}
                   className="mb-6"
                 />
                 <div className="flex items-center justify-between text-sm">
-                  <span>${filters.priceRange.min}</span>
-                  <span>${filters.priceRange.max}</span>
+                  <span>₹{filters.priceRange.min.toLocaleString('en-IN')}</span>
+                  <span>₹{filters.priceRange.max.toLocaleString('en-IN')}</span>
                 </div>
               </div>
               

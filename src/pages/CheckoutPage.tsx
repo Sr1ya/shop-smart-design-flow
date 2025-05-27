@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, CreditCard, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -15,7 +14,7 @@ import { getMockCartItems } from '@/lib/mockData';
 // Delivery options
 const deliveryOptions = [
   { id: 'standard', name: 'Standard Delivery', price: 0, days: '3-5' },
-  { id: 'express', name: 'Express Delivery', price: 10, days: '1-2' },
+  { id: 'express', name: 'Express Delivery', price: 50, days: '1-2' },
 ];
 
 // Payment methods
@@ -106,7 +105,7 @@ export default function CheckoutPage() {
   const deliveryOption = deliveryOptions.find(opt => opt.id === deliveryMethod) || deliveryOptions[0];
   const deliveryCost = deliveryOption.price;
   
-  const loyaltyDiscount = applyLoyaltyPoints ? 10 : 0;
+  const loyaltyDiscount = applyLoyaltyPoints ? 500 : 0;
   const total = subtotal + deliveryCost - loyaltyDiscount;
 
   return (
@@ -245,7 +244,7 @@ export default function CheckoutPage() {
                               <p className="text-sm text-shop-text-light">Estimated delivery: {option.days} business days</p>
                             </div>
                             <span>
-                              {option.price === 0 ? 'Free' : `$${option.price.toFixed(2)}`}
+                              {option.price === 0 ? 'Free' : `₹${option.price.toLocaleString('en-IN')}`}
                             </span>
                           </Label>
                         </div>
@@ -359,7 +358,7 @@ export default function CheckoutPage() {
                       </label>
                     </div>
                     <p className="text-sm text-shop-text-light mt-2 ml-6">
-                      You have 1000 points available (worth $10)
+                      You have 1000 points available (worth ₹500)
                     </p>
                   </div>
                   
@@ -410,7 +409,7 @@ export default function CheckoutPage() {
                       <div className="text-xs text-shop-text-light">Size: {item.size}</div>
                       <div className="flex justify-between mt-1">
                         <span className="text-xs">Qty: {item.quantity}</span>
-                        <span className="text-sm">${(item.price * item.quantity).toFixed(2)}</span>
+                        <span className="text-sm">₹{(item.price * item.quantity).toLocaleString('en-IN')}</span>
                       </div>
                     </div>
                   </div>
@@ -420,16 +419,16 @@ export default function CheckoutPage() {
               <div className="border-b border-gray-200 py-3">
                 <div className="flex justify-between mb-2">
                   <span className="text-shop-text-light">Subtotal</span>
-                  <span>${subtotal.toFixed(2)}</span>
+                  <span>₹{subtotal.toLocaleString('en-IN')}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-shop-text-light">Delivery</span>
-                  <span>{deliveryCost === 0 ? 'Free' : `$${deliveryCost.toFixed(2)}`}</span>
+                  <span>{deliveryCost === 0 ? 'Free' : `₹${deliveryCost.toLocaleString('en-IN')}`}</span>
                 </div>
                 {applyLoyaltyPoints && (
                   <div className="flex justify-between text-green-600">
                     <span>Loyalty Discount</span>
-                    <span>-$10.00</span>
+                    <span>-₹{loyaltyDiscount.toLocaleString('en-IN')}</span>
                   </div>
                 )}
               </div>
@@ -437,7 +436,7 @@ export default function CheckoutPage() {
               <div className="py-3">
                 <div className="flex justify-between font-semibold text-lg">
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>₹{total.toLocaleString('en-IN')}</span>
                 </div>
               </div>
               
